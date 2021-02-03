@@ -1,13 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using RequestExecutor.Commands;
-using RequestExecutor.Options;
-using RequestExecutor.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RequestExecutor.Controllers
 {

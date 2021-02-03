@@ -16,4 +16,4 @@ WORKDIR /app
 
 COPY --from=build /app/out .
 
-ENTRYPOINT ["dotnet", "publisher_api.dll"]
+ENTRYPOINT ["dotnet", "RequestGenerator.dll"]

@@ -1,6 +1,6 @@
-﻿namespace RequestExecutor.Models
+﻿namespace RequestGenerator
 {
-    public class RequestObjectModel
+    public class RequestModel
     {
         public string Url { get; set; }
         public byte Priority { get; set; }

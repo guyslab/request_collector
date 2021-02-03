@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace RequestExecutor
+namespace RequestGenerator
 {
     public class Startup
     {
@@ -18,8 +18,6 @@ namespace RequestExecutor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMessaging(Configuration.GetSection("Messaging").Bind);
-
             services.AddControllers();
         }
 

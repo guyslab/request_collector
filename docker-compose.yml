@@ -1,15 +1,29 @@
 version: '3.4'
 
 services:
-  publisher_api:
-    build: ./publisher_api
+  request_generator:
+    build: ./RequestGenerator
     restart: always
-  worker:
-    build: ./worker
+  request_executor:
+    build: ./RequestExecutor
     restart: always
     depends_on:
-      - "publisher_api"
       - "rabbitmq"
+  response_consumer:
+    build: ./ResponseConsumer
+    restart: always
+    depends_on:
+      - "catalogdb"
+      - "rabbitmq"
+
+  catalogdb:
+    container_name: catalogdb
+    image: mongo
+    restart: always
+    volumes:
+      — ${WEBAPP_STORAGE_HOME}/site:/data/db
+    ports:
+    — "27017:27017"
 
   rabbitmq: # login guest:guest
     image: rabbitmq:3-management

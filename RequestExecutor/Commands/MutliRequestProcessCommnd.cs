@@ -4,11 +4,9 @@ using RequestExecutor.Extensions;
 using RequestExecutor.Options;
 using RequestExecutor.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace RequestExecutor.Commands
 {
@@ -33,6 +31,7 @@ namespace RequestExecutor.Commands
             _messaging = messaging;
             _reqGen = requestGenerator;
             _reqObjectCount = genOptions?.Value?.RequestObjectsCount ?? DefaultRequestObjectsCount;
+            _httpClientFactory = httpClientFactory;
         }
 
         public void Execute()
