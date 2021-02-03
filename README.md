@@ -1,8 +1,11 @@
 # Collects requests and stores they're responses
 
 # Flow (PUML)
-@startuml
 
+![Diagram](flow.png)
+
+```puml
+@startuml
 
 actor client as "Client"
 participant req_exe as "Request Executor"
@@ -28,8 +31,8 @@ loop every x seconds
     res_con -> res_db: Store responses
 end
 
-
 @enduml
+```
 
 # Q&A:
 1. The part of "fetch multiple request objects from the queue" is confusing, did it mean: fetch multiple responses from the queue? THE queue is assumed to be the only mentioned queue, which is the responses queue.
