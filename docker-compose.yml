@@ -18,12 +18,13 @@ services:
 
   catalogdb:
     container_name: catalogdb
-    image: mongo
+    image: "mongo"
     restart: always
     volumes:
-      — ${WEBAPP_STORAGE_HOME}/site:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
     ports:
-    — "27017:27017"
+      - "27017:27017"
 
   rabbitmq: # login guest:guest
     image: rabbitmq:3-management
@@ -31,9 +32,9 @@ services:
     labels:
       NAME: "rabbitmq"
     ports:
-    - "4369:4369"
-    - "5671:5671"
-    - "5672:5672"
-    - "25672:25672"
-    - "15671:15671"
-    - "15672:15672"
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
