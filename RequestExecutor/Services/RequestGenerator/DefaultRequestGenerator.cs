@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RequestExecutor.Models;
 using RequestExecutor.Options;
 using System;
@@ -14,18 +15,22 @@ namespace RequestExecutor.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly RequestGenerationOptions _options;
+        private readonly ILogger _logger;
 
         public DefaultRequestGenerator(
             IHttpClientFactory httpClientFactory,
-            IOptions<RequestGenerationOptions> options)
+            IOptions<RequestGenerationOptions> options,
+            ILogger<DefaultRequestGenerator> logger)
         {
             _options = options.Value;
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<RequestObjectModel>> GenerateMany(int objectsCount)
         {
             string url = $"{_options.EndpointBaseUrl}requestObject?count={objectsCount}";
+            _logger.LogDebug("GenerateMany:url = " + url);
             var response = await _httpClientFactory.CreateClient().GetAsync(url);
 
             var json = await response.Content.ReadAsStringAsync();
