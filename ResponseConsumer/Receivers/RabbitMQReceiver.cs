@@ -49,9 +49,15 @@ namespace ResponseConsumer.Receivers
                     if (objects.Count >= count)
                     {
                         if (OnAllReceived?.Invoke(objects) == true)
+                        {
+                            Console.WriteLine("Basic Ack for: " + ea.DeliveryTag);
                             channel.BasicAck(ea.DeliveryTag, true);
+                        }
                         else
+                        {
+                            Console.WriteLine("Basic Reject for: " + ea.DeliveryTag);
                             channel.BasicReject(ea.DeliveryTag, true);
+                        }
 
                         objects.Clear();
                     }
