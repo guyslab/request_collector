@@ -69,7 +69,7 @@ namespace ResponseConsumer.Receivers
                                     consumer: consumer);
 
                 Console.WriteLine("Waiting for messages. Press CTRL + C to stop.");
-                Console.ReadLine();
+                System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
 
             }
         }
