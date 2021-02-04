@@ -10,18 +10,18 @@ using System.Text.Json;
 
 namespace RequestExecutor.Commands
 {
-    public class MutliRequestProcessCommnd: ICommand
+    public class MutliRequestProcessCommand: ICommand
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILogger<MutliRequestProcessCommnd> _logger;
+        private readonly ILogger<MutliRequestProcessCommand> _logger;
         private readonly IMessageService _messaging;
         private readonly IRequestGenerator _reqGen;
         private readonly int _reqObjectCount;
 
         private const int DefaultRequestObjectsCount = 5;
 
-        public MutliRequestProcessCommnd(
-            ILogger<MutliRequestProcessCommnd> logger,
+        public MutliRequestProcessCommand(
+            ILogger<MutliRequestProcessCommand> logger,
             IMessageService messaging,
             IRequestGenerator requestGenerator,
             IOptions<RequestGenerationOptions> genOptions,

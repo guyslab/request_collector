@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RequestExecutor.Commands;
+using RequestExecutor.Services;
 
 namespace RequestExecutor
 {
@@ -18,7 +20,12 @@ namespace RequestExecutor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
             services.AddMessaging(Configuration.GetSection("Messaging").Bind);
+            services.AddTransient<ICommand, MutliRequestProcessCommand>();
+            services.AddRequestGenerator(Configuration.GetSection("RequestGeneration").Bind);
+            
 
             services.AddControllers();
         }

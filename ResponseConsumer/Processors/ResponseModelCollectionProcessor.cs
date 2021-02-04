@@ -9,9 +9,11 @@ namespace ResponseConsumer.Processors
     public class ResponseModelCollectionProcessor : IProcessor<ICollection<ResponseModel>>
     {
         private readonly IResponseRepository _repo;
-        private readonly CatalogDatabaseOptions _options;
 
-
+        public ResponseModelCollectionProcessor(IResponseRepository repo)
+        {
+            _repo = repo;
+        }
 
         public bool Process(ICollection<ResponseModel> arg)
         {
