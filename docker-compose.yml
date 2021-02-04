@@ -15,10 +15,12 @@ services:
     ports:
       - "8000:80"
     environment:
-      - "RequestGeneration:EndpointBaseUrl=http://request_generator:8001/"
+      - "RequestGeneration:EndpointBaseUrl=http://request_generator/"
   response_consumer:
     build: ./ResponseConsumer
     restart: always
+    environment:
+      - "CatalogDatabase:ConnectionString=mongodb://catalogdb"
     depends_on:
       - "catalogdb"
       - "rabbitmq"
