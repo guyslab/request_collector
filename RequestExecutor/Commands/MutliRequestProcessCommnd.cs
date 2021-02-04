@@ -46,7 +46,7 @@ namespace RequestExecutor.Commands
             {
                 var response = _httpClientFactory.CreateClient().GetAsync(reqObject.Url).Result;
                 var responseModel = response.ToResponseModel(reqObject, processUid.ToString());
-                var responseModelJson = JsonSerializer.Serialize(responseModel);
+                var responseModelJson = JsonSerializer.Serialize(responseModel, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 _messaging.Enqueue(responseModelJson);
             }            
         }

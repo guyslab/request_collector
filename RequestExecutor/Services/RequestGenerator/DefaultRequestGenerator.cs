@@ -34,7 +34,7 @@ namespace RequestExecutor.Services
             var response = await _httpClientFactory.CreateClient().GetAsync(url);
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<IEnumerable<RequestObjectModel>>(json);
+            var result = JsonSerializer.Deserialize<ICollection<RequestObjectModel>>(json, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
             return result;
         }

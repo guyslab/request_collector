@@ -41,7 +41,7 @@ namespace ResponseConsumer.Receivers
                 var body = ea.Body.ToArray();
                 var json = Encoding.UTF8.GetString(body);
                 Console.WriteLine(" [x] Received from Rabbit: {0}", json);
-                objects.Add(JsonSerializer.Deserialize<TObject>(json));
+                objects.Add(JsonSerializer.Deserialize<TObject>(json, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 
 
                 if (objects.Count >= count)
