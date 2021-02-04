@@ -9,6 +9,9 @@ services:
     restart: always
     depends_on:
       - "rabbitmq"
+      - "request_generator"
+    ports:
+      - "8000:80"
   response_consumer:
     build: ./ResponseConsumer
     restart: always

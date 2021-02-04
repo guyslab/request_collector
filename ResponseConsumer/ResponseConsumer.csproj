@@ -15,5 +15,10 @@
     <PackageReference Include="MongoDB.Driver" Version="2.11.6" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
   </ItemGroup>
+  <ItemGroup>
+     <None Update="appsettings.json">
+	<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+  </ItemGroup>
 
 </Project>

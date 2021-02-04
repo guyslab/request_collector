@@ -31,7 +31,7 @@ namespace RequestExecutor.Services
             _conn = _factory.CreateConnection();
             _channel = _conn.CreateModel();
             _channel.QueueDeclare(queue: _options.Topic,
-                                    durable: false,
+                                    durable: true,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
