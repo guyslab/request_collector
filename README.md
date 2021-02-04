@@ -1,4 +1,19 @@
-# Collects requests and stores they're responses
+# Abtract
+
+Collects requests and stores they're responses
+
+# Get started
+
+1. Make sure docker and docker-compose are installed
+2. clone project
+3. ```
+docker-compose up
+```
+4. When all services are idle, fire POST request to enquqe request objects:
+```
+POST /MultiRequestProcess HTTP/1.1
+Host: <host>:<post>
+```
 
 # Flow (PUML)
 
