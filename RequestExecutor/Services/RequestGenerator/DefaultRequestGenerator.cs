@@ -25,7 +25,7 @@ namespace RequestExecutor.Services
 
         public async Task<IEnumerable<RequestObjectModel>> GenerateMany(int objectsCount)
         {
-            string url = _options.EndpointBaseUrl + "requestObject";
+            string url = $"{_options.EndpointBaseUrl}requestObject?count={objectsCount}";
             var response = await _httpClientFactory.CreateClient().GetAsync(url);
 
             var json = await response.Content.ReadAsStringAsync();
