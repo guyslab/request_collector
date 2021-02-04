@@ -25,39 +25,47 @@ namespace ResponseConsumer.Receivers
             List<TObject> objects = new List<TObject>();
             ConnectionFactory factory = new ConnectionFactory() { HostName = _options.Hostname, Port = _options.Port};
             factory.UserName = _options.Username;
-            factory.Password = _options.Password;
-            IConnection conn = factory.CreateConnection();
-            IModel channel = conn.CreateModel();
-            channel.QueueDeclare(queue: _options.Topic,
+            factory.Password = _options.Password;            
+
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: _options.Topic,
                                     durable: true,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
 
-            var consumer = new EventingBasicConsumer(channel);
-            channel.BasicQos(prefetchSize: 0, prefetchCount: (ushort) count, global: false);
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body.ToArray();
-                var json = Encoding.UTF8.GetString(body);
-                Console.WriteLine(" [x] Received from Rabbit: {0}", json);
-                objects.Add(JsonSerializer.Deserialize<TObject>(json, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-
-
-                if (objects.Count >= count)
+                var consumer = new EventingBasicConsumer(channel);
+                channel.BasicQos(prefetchSize: 0, prefetchCount: (ushort)count, global: false);
+                consumer.Received += (model, ea) =>
                 {
-                    if (OnAllReceived?.Invoke(objects) == false)
-                        channel.BasicAck(ea.DeliveryTag, true);
-                    else
-                        channel.BasicReject(ea.DeliveryTag, true);
+                    var body = ea.Body.ToArray();
+                    var json = Encoding.UTF8.GetString(body);
+                    Console.WriteLine(" [x] Received from Rabbit: {0}", json);
+                    objects.Add(JsonSerializer.Deserialize<TObject>(json, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 
-                    objects.Clear();
-                }
-                
-            };
-            channel.BasicConsume(queue: _options.Topic,
+
+                    if (objects.Count >= count)
+                    {
+                        if (OnAllReceived?.Invoke(objects) == true)
+                            channel.BasicAck(ea.DeliveryTag, true);
+                        else
+                            channel.BasicReject(ea.DeliveryTag, true);
+
+                        objects.Clear();
+                    }
+
+                };
+
+                channel.BasicConsume(queue: _options.Topic,
                                     autoAck: false,
                                     consumer: consumer);
+
+                Console.WriteLine("Waiting for messages. Press CTRL + C to stop.");
+                Console.ReadLine();
+
+            }
         }
     }
 }

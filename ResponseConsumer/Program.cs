@@ -23,14 +23,14 @@ namespace ResponseConsumer
             var serviceProvider = services.BuildServiceProvider();
             var consumer = serviceProvider.GetService<Consumer>();
             consumer.Start();
+
+            //// Uncomment below line for debug purposes
+            //Console.WriteLine("COLLECTION: " + System.Text.Json.JsonSerializer.Serialize(serviceProvider.GetService<IResponseRepository>().GetAll().Result));
+
             if (serviceProvider is IDisposable)
             {
                 ((IDisposable)serviceProvider).Dispose();
-            }                
-
-
-            
-
+            }
         }
 
         private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)

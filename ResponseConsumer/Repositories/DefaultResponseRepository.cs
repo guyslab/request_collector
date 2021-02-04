@@ -36,11 +36,32 @@ namespace ResponseConsumer.Repositories
             List<WriteModel<Response>> bulkOps = new List<WriteModel<Response>>();
 
             var responses = responseModels.Select(r => r.ToResponse());
-            var updateResult = await _context
-                .Responses
-                .BulkUpsertAsync(responses);
+            try
+            {
+                await _context
+                    .Responses
+                    .InsertManyAsync(responses);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine("Documents insert failed with error: " + e.Message);
+                return false;
+            }
+            return true;
+        }
 
-            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+        public async Task<ICollection<ResponseModel>> GetAll()
+        {
+            var responses = await _context
+                .Responses
+                .Find(Builders<Response>.Filter.Empty)
+                .ToListAsync();
+
+            var responseModels = responses
+                .Select(r => r.ToResponseModel())
+                .ToList();
+
+            return responseModels;
         }
     }
 }

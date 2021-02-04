@@ -8,5 +8,6 @@ namespace ResponseConsumer.Repositories
     {
         Task<bool> CreateOrUpdate(ResponseModel response);
         Task<bool> CreateOrUpdateMany(ICollection<ResponseModel> responses);
+        Task<ICollection<ResponseModel>> GetAll();
     }
 }
