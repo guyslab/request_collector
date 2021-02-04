@@ -15,7 +15,7 @@ services:
     ports:
       - "8000:80"
     environment:
-      - "RequestGeneration:EntpointBaseUrl=http://request_generator:8001/"
+      - "RequestGeneration:EndpointBaseUrl=http://request_generator:8001/"
   response_consumer:
     build: ./ResponseConsumer
     restart: always
